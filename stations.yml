@@ -1,111 +1,211 @@
 ---
 amazon:
+  connections:
+    - walker
+    - mind_flayer
+  coordinates:
     x: 400
     y: 68
     z: -168
 badlands_hole:
+  connections:
+    - shin_sealab
+  coordinates:
     x: -183
     y: 87
     z: -799
 desert:
+  connections:
+    - joshua_desert
+    - thomas_desert
+  coordinates:
     x: 218
     y: 47
     z: 250
 farfetchd:
+  connections:
+    - joshlantis
+    - shin_sealab
+  coordinates:
     x: -244
     y: 82
     z: -826
 hole:
+  connections:
+    - main_thomas
+    - icy_spikes
+  coordinates:
     x: -134
     y: 72
     z: 40
 icy_spikes:
+  connections:
+    - hole
+    - main_shin
+  coordinates:
     x: -70
     y: 73
     z: -51
 isle_of_jason:
+  connections:
+#    - sealab
+    - shin_sealab
+  coordinates:
     x: -355
     y: 56
     z: -778
 jason:
+  connections:
+    - joshua_desert
+    - south
+  coordinates:
     x: -56
     y: 76
     z: 69
 jason_valley:
+  connections:
+    - shin_walker
+    - shin_sealab
+  coordinates:
     x: -244
     y: 78
     z: -746
 joshlantis:
+  connections:
+    - farfetchd
+  coordinates:
     x: -128
     y: 86
     z: -1004
 joshua:
+  connections:
+    - main_walker
+    - joshua_desert
+  coordinates:
     x: -3
     y: 68
     z: 31
 jungle:
+  connections:
+    - thomas_blake
+    - stronghold2point0
+  coordinates:
     x: -247
     y: 68
     z: 288
 ksenia:
+  connections:
+    - shin_walker
+    - walker
+  coordinates:
     x: -61
     y: 85
     z: -201
 matrejek_meadows:
+  connections:
+    - matrejek_meadows_sheep
+    - main_thomas
+  coordinates:
     x: -186
     y: 77
     z: 75
 matrejek_meadows_sheep:
+  connections:
+    - matrejek_meadows
+    - thomas_blake
+  coordinates:
     x: -198
     y: 69
     z: 91
 mind_flayer:
+  connections:
+    - amazon
+    - roanoke
+  coordinates:
     x: 360
     y: 69
     z: -94
 new_blakeland:
+  connections:
+    - thomas_blake
+  coordinates:
     x: -279
     y: 87
     z: 64
 # north:
-# 
+#   connections:
+#   coordinates:
+#
 #     x: 0
 #     y: 0
 #     z: 0
 roanoke:
+  connections:
+    - mind_flayer
+    - main_walker
+  coordinates:
     x: 167
     y: 79
     z: -25
 # sealab:
-# 
+#   connections:
+#     - isle_of_jason
+#   coordinates:
 #     x: 0
 #     y: 0
 #     z: 0
 south:
+  connections:
+    - jason
+    - main_thomas
+  coordinates:
     x: -98
     y: 74
     z: 77
 stronghold:
+  connections:
+    - main_shin
+    - shin_walker
+  coordinates:
     x: -123
     y: 88
     z: -139
 stronghold2point0:
+  connections:
+    - jungle
+    - thomas_desert
+  coordinates:
     x: -98
     y: 38
     z: 300
 supermax:
+  connections:
+    - thomas_desert
+    - walker_keep
+  coordinates:
     x: 218
     y: 48
     z: 291
 walker:
+  connections:
+    - ksenia
+    - amazon
+  coordinates:
     x: 256
     y: 55
     z: -303
 walker_keep:
+  connections:
+    - supermax
+  coordinates:
     x: 258
     y: 48
     z: 476
 welcome_center:
+  connections:
+    - main_walker
+    - main_shin
+  coordinates:
     x: -7
     y: 50
     z: -17

@@ -4,91 +4,81 @@ import math
 import sys
 import yaml
 
-g = nx.Graph()
-
-station_yaml = yaml.full_load(open("stations.yml", "r"))
-switch_yaml = yaml.full_load(open("switches.yml", "r"))
-
-combined_yaml = {}
-combined_yaml.update(station_yaml)
-combined_yaml.update(switch_yaml)
-
-
+'''
+Function used to calculate distance between two stops
+'''
 def weight(u, v, d):
-    ux = combined_yaml[u]["x"]
-    uy = combined_yaml[u]["y"]
-    uz = combined_yaml[u]["z"]
+    ux = all_coordinates[u]["x"]
+    uy = all_coordinates[u]["y"]
+    uz = all_coordinates[u]["z"]
 
-    vx = combined_yaml[v]["x"]
-    vy = combined_yaml[v]["y"]
-    vz = combined_yaml[v]["z"]
+    vx = all_coordinates[v]["x"]
+    vy = all_coordinates[v]["y"]
+    vz = all_coordinates[v]["z"]
 
     w = math.sqrt(pow(vx - ux, 2) + pow(vy - uy, 2) + pow(vz - uz, 2))
     return w
 
+'''
+In this context, a stop is either a station or a switch.
+Given properly formatted stop dictionaries, return dictionaries mapping...
 
-stations = station_yaml.keys()
-switches = switch_yaml.keys()
+stops -> coordinates
 
-g.add_edge("joshlantis", "farfetchd")
-g.add_edge("ksenia", "walker")
-g.add_edge("walker", "amazon")
-g.add_edge("amazon", "mind_flayer")
-g.add_edge("mind_flayer", "roanoke")
-g.add_edge("jason", "south")
-g.add_edge("hole", "icy_spikes")
-g.add_edge("matrejek_meadows", "matrejek_meadows_sheep")
-g.add_edge("jungle", "stronghold2point0")
-g.add_edge("supermax", "walker_keep")
+AND
 
-g.add_edge("sw1", "farfetchd", dir=1)
-g.add_edge("sw1", "badlands_hole", dir=2)
-g.add_edge("sw1", "jason_valley", dir=3)
-g.add_edge("sw1", "isle_of_jason", dir=4)
+stops -> connections
 
-g.add_edge("sw2", "jason_valley", dir=1)
-g.add_edge("sw2", "ksenia", dir=2)
-g.add_edge("sw2", "stronghold", dir=3)
+...returning both dictionaries.
 
-g.add_edge("sw3", "welcome_center", dir=2)
-g.add_edge("sw3", "icy_spikes", dir=3)
-g.add_edge("sw3", "stronghold", dir=4)
+'''
+def process(data):
+    coordinates = {}
+    connections = {}
 
-g.add_edge("sw4", "welcome_center", dir=1)
-g.add_edge("sw4", "roanoke", dir=2)
-g.add_edge("sw4", "joshua", dir=3)
+    for stop, stop_data in data.items():
+        coordinates[stop] = stop_data['coordinates']
+        connections[stop] = stop_data['connections']
 
-g.add_edge("sw5", "joshua", dir=1)
-g.add_edge("sw5", "desert", dir=2)
-g.add_edge("sw5", "jason", dir=4)
+    return(coordinates, connections)
 
-g.add_edge("sw6", "hole", dir=2)
-g.add_edge("sw6", "south", dir=3)
-g.add_edge("sw6", "matrejek_meadows", dir=4)
+# Load YAML from files
+station_yaml = yaml.full_load(open("stations.yml", "r"))
+switch_yaml = yaml.full_load(open("switches.yml", "r"))
 
-g.add_edge("sw7", "matrejek_meadows_sheep", dir=1)
-g.add_edge("sw7", "jungle", dir=3)
-g.add_edge("sw7", "new_blakeland", dir=4)
+# Process switches, stations into respective coordinates and connections dictionaries
+switch_coordinates, switch_connections = process(switch_yaml)
+station_coordinates, station_connections = process(station_yaml)
 
-g.add_edge("sw8", "desert", dir=1)
-g.add_edge("sw8", "supermax", dir=3)
-g.add_edge("sw8", "stronghold2point0", dir=4)
+# Create dictionary with all coordinates (primarily for calculating weights)
+all_coordinates = {}
+all_coordinates.update(station_coordinates)
+all_coordinates.update(switch_coordinates)
 
+# Build map from connections dictionaries
+g = nx.from_dict_of_lists(station_connections)
+g.update(nx.from_dict_of_dicts(switch_connections))
+
+# Create a data structure that maps keys NESW to 1-4, respectively
+direction_handler = dict((y,x) for x,y in enumerate(["N", "E", "S", "W"], start=1))
+
+# Calculate the switch configuration required for shortest paths to each station
 out = {}
-
-for station in stations:
+for station, coordinates in station_coordinates.items():
     out[station] = {
         "switches": {},
         "pos": {
-            "x": station_yaml[station]["x"],
-            "y": station_yaml[station]["y"],
-            "z": station_yaml[station]["z"],
+            "x": coordinates["x"],
+            "y": coordinates["y"],
+            "z": coordinates["z"],
         },
     }
 
-    for switch in switches:
+    for switch in switch_coordinates.keys():
         a = nx.dijkstra_path(g, station, switch, weight)
-        out[station]["switches"][switch] = g.edges[a[-1], a[-2]]["dir"]
+        direction = g.edges[a[-1], a[-2]]["dir"]
+        out[station]["switches"][switch] = direction_handler[direction]
 
+# Print results
 print("---")
 print(yaml.dump(out))
