@@ -1,33 +1,106 @@
 ---
-sw1:
-  x: -244
-  y: 77
-  z: -778
-sw2:
-  x: -123
-  y: 87
-  z: -156
-sw3:
-  x: -70
-  y: 72
-  z: -59
-sw4:
-  x: -7
-  y: 49
-  z: -10
-sw5:
-  x: -3
-  y: 67
-  z: 36
-sw6:
-  x: -145
-  y: 71
-  z: 34
-sw7:
-  x: -251
-  y: 70
-  z: 100
-sw8:
-  x: 218
-  y: 47
-  z: 286
+shin_sealab:
+  connections:
+    farfetchd:
+      dir: "N"
+    badlands_hole:
+      dir: "E"
+    jason_valley:
+      dir: "S"
+    isle_of_jason:
+      dir: "W"
+  coordinates:
+    x: -244
+    y: 77
+    z: -778
+
+shin_walker:
+  connections:
+    jason_valley:
+      dir: "N"
+    ksenia:
+      dir: "E"
+    stronghold:
+      dir: "S"
+  coordinates:
+    x: -123
+    y: 87
+    z: -156
+
+main_shin:
+  connections:
+    welcome_center:
+      dir: "E"
+    icy_spikes:
+      dir: "S"
+    stronghold:
+      dir: "W"
+  coordinates:
+    x: -70
+    y: 72
+    z: -59
+
+main_walker:
+  connections:
+    welcome_center:
+      dir: "N"
+    roanoke:
+      dir: "E"
+    joshua:
+      dir: "S"
+  coordinates:
+    x: -7
+    y: 49
+    z: -10
+
+joshua_desert:
+  connections:
+    joshua:
+      dir: "N"
+    desert:
+      dir: "E"
+    jason:
+      dir: "W"
+  coordinates:
+    x: -3
+    y: 67
+    z: 36
+
+main_thomas:
+  connections:
+    hole:
+      dir: "E"
+    south:
+      dir: "S"
+    matrejek_meadows:
+      dir: "W"
+  coordinates:
+    x: -145
+    y: 71
+    z: 34
+
+thomas_blake:
+  connections:
+    matrejek_meadows_sheep:
+      dir: "N"
+    jungle:
+      dir: "S"
+    new_blakeland:
+      dir: "W"
+  coordinates:
+    x: -251
+    y: 70
+    z: 100
+
+thomas_desert:
+  connections:
+    desert:
+      dir: "N"
+    supermax:
+      dir: "S"
+    stronghold2point0:
+      dir: "W"
+  coordinates:
+    x: 218
+    y: 47
+    z: 286
